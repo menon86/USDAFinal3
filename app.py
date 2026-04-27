@@ -888,11 +888,12 @@ with tabs[4]:
         "Total Views per session":        "Views/Session",
     })
     st.dataframe(
-        top10.style
-             .format({"Sessions":"{:,.0f}","Bounce Rate":"{:.1%}",
-                      "Avg Duration (s)":"{:.0f}","Views/Session":"{:.2f}"})
-             .background_gradient(subset=["Sessions"], cmap="Greens")
-             .background_gradient(subset=["Bounce Rate"], cmap="RdYlGn_r"),
+        top10.style.format({
+            "Sessions":"{:,.0f}",
+            "Bounce Rate":"{:.1%}",
+            "Avg Duration (s)":"{:.0f}",
+            "Views/Session":"{:.2f}"
+        }),
         use_container_width=True, hide_index=True,
     )
 
