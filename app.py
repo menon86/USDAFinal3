@@ -164,6 +164,30 @@ MONTH_MAP = {1:"Jan",2:"Feb",3:"Mar",4:"Apr",5:"May",6:"Jun",
              7:"Jul",8:"Aug",9:"Sep",10:"Oct",11:"Nov",12:"Dec"}
 
 # ─────────────────────────────── DATA LOADING ─────────────────────────
+def get_plot_theme():
+    """Return plot colors based on Streamlit theme (light/dark mode)."""
+    # Detect if dark mode is enabled
+    # In dark mode, Streamlit's default text is light, so we need dark backgrounds
+    try:
+        theme = st.get_option("theme.base")
+        if theme == "dark":
+            return {
+                "plot_bgcolor": "#0f0f0f",
+                "paper_bgcolor": "#0a0a0a",
+                "font_color": "#e8e8e8",
+                "grid_color": "#2a2a2a",
+            }
+    except:
+        pass
+    
+    # Default light mode
+    return {
+        "plot_bgcolor": "white",
+        "paper_bgcolor": "white",
+        "font_color": "#1a1a1a",
+        "grid_color": "#e8e8e8",
+    }
+
 @st.cache_data(show_spinner="Loading USDA dataset…")
 def load_data():
     # Support both XLSX and XLSB formats
@@ -355,13 +379,13 @@ with tabs[0]:
             marker=dict(size=6), name="Avg Duration (s)",
         ))
         fig.update_layout(
-            yaxis =dict(title="Total Sessions", showgrid=True, gridcolor="#e8e8e8"),
+            yaxis =dict(title="Total Sessions", showgrid=True, gridcolor=get_plot_theme()["grid_color"]),
             yaxis2=dict(title="Bounce Rate", overlaying="y", side="right",
                         tickformat=".0%", showgrid=False, anchor="free", position=0.93),
             yaxis3=dict(title="Duration (s)", overlaying="y", side="right",
                         showgrid=False, anchor="free", position=1.0),
             legend=dict(orientation="h", y=1.13, font_size=11),
-            plot_bgcolor="white", paper_bgcolor="white",
+            plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"],
             margin=dict(t=40, b=30, r=80), height=360,
         )
         st.plotly_chart(fig, use_container_width=True)
@@ -381,7 +405,7 @@ with tabs[0]:
             labels=dict(x="Day of Month", y="Month", color="Sessions"),
             aspect="auto",
         )
-        fig2.update_layout(plot_bgcolor="white", paper_bgcolor="white",
+        fig2.update_layout(plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"],
                             margin=dict(t=20, b=20), height=360)
         st.plotly_chart(fig2, use_container_width=True)
 
@@ -404,7 +428,7 @@ with tabs[0]:
             ))
         fig3.update_layout(
             barmode="group", title="Device Engagement Comparison",
-            yaxis_title="Metric Value", plot_bgcolor="white", paper_bgcolor="white",
+            yaxis_title="Metric Value", plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"],
             legend=dict(orientation="h", y=1.15), height=340, margin=dict(t=50, b=20),
         )
         st.plotly_chart(fig3, use_container_width=True)
@@ -432,7 +456,7 @@ with tabs[0]:
         fig4.add_vrect(x0="0-20s", x1="60-80s", fillcolor="#ffeb3b", opacity=0.15, line_width=0,
                        annotation_text="⚡ Peak flux", annotation_position="top left",
                        annotation_font_size=11)
-        fig4.update_layout(plot_bgcolor="white", paper_bgcolor="white",
+        fig4.update_layout(plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"],
                            height=320, margin=dict(t=20, b=10),
                            xaxis_tickangle=-40, legend=dict(font_size=11))
         st.plotly_chart(fig4, use_container_width=True)
@@ -448,7 +472,7 @@ with tabs[0]:
             textinfo="label+percent", textfont_size=12,
         ))
         fig5.update_layout(showlegend=False, height=320,
-                           plot_bgcolor="white", paper_bgcolor="white",
+                           plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"],
                            margin=dict(t=10, b=10, l=10, r=10))
         st.plotly_chart(fig5, use_container_width=True)
 
@@ -578,10 +602,10 @@ with tabs[1]:
                            text="🧟 Zombie Session Zone", showarrow=False,
                            font=dict(color="#b71c1c", size=12))
     fig_fr.update_layout(
-        plot_bgcolor="white", paper_bgcolor="white", height=460,
+        plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"], height=460,
         margin=dict(t=50, b=30),
-        xaxis=dict(showgrid=True, gridcolor="#eeeeee"),
-        yaxis=dict(showgrid=True, gridcolor="#eeeeee", tickformat=".0%"),
+        xaxis=dict(showgrid=True, gridcolor=get_plot_theme()["grid_color"]),
+        yaxis=dict(showgrid=True, gridcolor=get_plot_theme()["grid_color"], tickformat=".0%"),
     )
     st.plotly_chart(fig_fr, use_container_width=True)
 
@@ -597,7 +621,7 @@ with tabs[1]:
             fillcolor=PAL[c], line_color=PAL[c], opacity=0.55,
         ))
     fig_vio.update_layout(
-        plot_bgcolor="white", paper_bgcolor="white", height=340,
+        plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"], height=340,
         yaxis=dict(title="Bounce Rate", tickformat=".0%"),
         showlegend=False, margin=dict(t=20, b=20),
     )
@@ -652,7 +676,7 @@ with tabs[2]:
                          annotation_position="top right", annotation_font_color="#e53935")
         fig_el.update_layout(
             xaxis_title="Number of Clusters (k)", yaxis_title="Inertia (Within-Cluster SS)",
-            plot_bgcolor="white", paper_bgcolor="white",
+            plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"],
             xaxis=dict(tickvals=ks), height=330, margin=dict(t=30, b=30),
         )
         st.plotly_chart(fig_el, use_container_width=True)
@@ -674,7 +698,7 @@ with tabs[2]:
                            annotation_position="top right")
         fig_sil.update_layout(
             xaxis_title="Number of Clusters (k)", yaxis_title="Silhouette Score",
-            plot_bgcolor="white", paper_bgcolor="white",
+            plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"],
             xaxis=dict(tickvals=ks), height=330, margin=dict(t=30, b=30),
         )
         st.plotly_chart(fig_sil, use_container_width=True)
@@ -704,7 +728,7 @@ with tabs[2]:
                 legendgroup=str(c),
             ))
     fig_box.update_layout(
-        plot_bgcolor="white", paper_bgcolor="white",
+        plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"],
         height=400, margin=dict(t=20, b=20),
         yaxis_title="Standardised Value (z-score)", boxmode="group",
     )
@@ -814,7 +838,7 @@ with tabs[3]:
                 name="⭐ Your Input",
             ))
             fig_sim.update_layout(
-                plot_bgcolor="white", paper_bgcolor="white",
+                plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"],
                 height=340, margin=dict(t=40, b=20),
                 yaxis_tickformat=".0%", legend=dict(font_size=11),
             )
@@ -873,7 +897,7 @@ with tabs[3]:
         labels={"Total Average session duration":"Duration (s)","Total Bounce rate":"Bounce Rate"},
         height=480,
     )
-    fig_exp.update_layout(plot_bgcolor="white", paper_bgcolor="white",
+    fig_exp.update_layout(plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"],
                            margin=dict(t=50, b=20), showlegend=False)
     fig_exp.for_each_yaxis(lambda a: a.update(tickformat=".0%"))
     st.plotly_chart(fig_exp, use_container_width=True)
@@ -913,10 +937,10 @@ with tabs[4]:
         font=dict(color="#b71c1c", size=13, family="Segoe UI"),
     )
     fig_prio.update_layout(
-        plot_bgcolor="white", paper_bgcolor="white",
+        plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"],
         height=460, margin=dict(t=50, b=30),
         xaxis_tickformat=".0%",
-        yaxis=dict(showgrid=True, gridcolor="#eeeeee"),
+        yaxis=dict(showgrid=True, gridcolor=get_plot_theme()["grid_color"]),
     )
     st.plotly_chart(fig_prio, use_container_width=True)
 
@@ -966,9 +990,9 @@ with tabs[4]:
             line=dict(color=color, width=2.3), marker=dict(size=7),
         ))
     fig_mb.update_layout(
-        plot_bgcolor="white", paper_bgcolor="white", height=300,
+        plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"], height=300,
         yaxis=dict(title="Avg Bounce Rate", tickformat=".0%",
-                   showgrid=True, gridcolor="#eeeeee"),
+                   showgrid=True, gridcolor=get_plot_theme()["grid_color"]),
         legend=dict(orientation="h", y=1.12),
         margin=dict(t=30, b=20),
     )
@@ -990,7 +1014,7 @@ with tabs[4]:
         title="Engagement Depth Map — Duration vs Views/Session",
         opacity=0.75,
     )
-    fig_sd.update_layout(plot_bgcolor="white", paper_bgcolor="white",
+    fig_sd.update_layout(plot_bgcolor=get_plot_theme()["plot_bgcolor"], paper_bgcolor=get_plot_theme()["paper_bgcolor"],
                           height=380, margin=dict(t=50, b=20))
     st.plotly_chart(fig_sd, use_container_width=True)
 
