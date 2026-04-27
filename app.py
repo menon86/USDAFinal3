@@ -566,7 +566,7 @@ with tabs[1]:
             rec  = PERSONA_RECS[c]
             st.markdown(
                 f'<span class="persona-badge {cls}">{name}</span>'
-                f'<span style="font-size:0.84rem;color:#333;"> {rec}</span>',
+                f'<span style="font-size:0.84rem;color:var(--text-secondary);"> {rec}</span>',
                 unsafe_allow_html=True,
             )
             st.markdown("")
@@ -801,7 +801,7 @@ with tabs[3]:
             <div class="sim-result-box">
               <h4>Assigned Persona</h4>
               <span class="persona-badge {pcls}" style="font-size:1rem;padding:0.45rem 1.1rem;">{pname}</span>
-              <p style="margin-top:0.8rem;font-size:0.87rem;color:#1b5e20;">
+              <p style="margin-top:0.8rem;font-size:0.87rem;color:var(--text-accent);">
                 <strong>Recommendation:</strong> {rec}
               </p>
             </div>
@@ -874,8 +874,8 @@ with tabs[3]:
 
         else:
             st.markdown("""
-            <div style="padding:2.5rem;text-align:center;background:#f9fbe7;border-radius:10px;
-                        border:1px dashed #aed581;color:#558b2f;">
+            <div style="padding:2.5rem;text-align:center;background:var(--bg-callout);border-radius:10px;
+                        border:1px dashed #81c784;color:var(--text-accent);">
               <div style="font-size:2.5rem;">🎛️</div>
               <p style="font-size:1rem;margin-top:0.8rem;">
                 Adjust the sliders on the left and click<br>
