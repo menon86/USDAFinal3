@@ -376,10 +376,10 @@ with tabs[0]:
                 bins=bins, labels=labels, include_lowest=True,
             )
             bk = sub.groupby("bucket", observed=True)[f"{dev} Sessions"].mean().reset_index()
+            bk.columns = ["Bucket", "Avg Sessions"]
             bk["Device"] = dev
             window_data.append(bk)
-        wdf = pd.concat(window_data)
-        wdf.columns = ["Bucket","Avg Sessions","Device"]
+        wdf = pd.concat(window_data, ignore_index=True)
         fig4 = px.line(wdf, x="Bucket", y="Avg Sessions", color="Device",
                        color_discrete_map={"Desktop":"#2e6b3e","Mobile":"#ff7043","Tablet":"#1565c0"},
                        markers=True)
