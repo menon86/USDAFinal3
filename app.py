@@ -133,13 +133,8 @@ def load_data():
     # Read XLSB or XLSX
     if data_file.endswith('.xlsb'):
         try:
-            # For XLSB: use pyxlsb library
-            import pyxlsb
-            with pyxlsb.open_workbook(data_file) as wb:
-                sheet = wb.sheets[0]  # Get first sheet (named 'data')
-                rows = list(sheet.rows())
-                # Convert to DataFrame
-                df = pd.DataFrame([row for row in rows[1:]], columns=[cell.v for cell in rows[0]])
+            # Use pandas with pyxlsb engine (simplest approach)
+            df = pd.read_excel(data_file, sheet_name=0, engine='pyxlsb')
         except ImportError:
             st.error("""
             ❌ **pyxlsb library not found.**
@@ -152,9 +147,21 @@ def load_data():
             Or convert your file to XLSX using Excel/LibreOffice and upload that instead.
             """)
             st.stop()
+        except Exception as e:
+            st.error(f"""
+            ❌ **Error reading XLSB file:** {str(e)}
+            
+            The XLSB file may be corrupted or in an unsupported format.
+            Try converting to XLSX using Excel or LibreOffice.
+            """)
+            st.stop()
     else:
         # Standard XLSX
-        df = pd.read_excel(data_file, sheet_name="data")
+        try:
+            df = pd.read_excel(data_file, sheet_name="data")
+        except Exception as e:
+            st.error(f"❌ **Error reading XLSX file:** {str(e)}")
+            st.stop()
 
     # Aggregate sessions per page and apply 50k threshold
     page_totals = (
