@@ -27,8 +27,33 @@ st.set_page_config(
 # ─────────────────────────────── STYLING ──────────────────────────────
 st.markdown("""
 <style>
+    /* Color Variables for Light/Dark Mode Compatibility */
+    :root {
+        /* Light Mode (Default) */
+        --bg-primary: #f4f6f4;
+        --bg-card: white;
+        --bg-callout: #e8f5e9;
+        --text-primary: #1a3a2a;
+        --text-secondary: #6c757d;
+        --text-accent: #1b5e20;
+        --text-error: #b71c1c;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            /* Dark Mode */
+            --bg-primary: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --bg-callout: #0d2910;
+            --text-primary: #e8e8e8;
+            --text-secondary: #b0b0b0;
+            --text-accent: #81c784;
+            --text-error: #ff8a80;
+        }
+    }
+
     html, body, [class*="css"] { font-family: 'Segoe UI', sans-serif; }
-    .main { background-color: #f4f6f4; }
+    .main { background-color: var(--bg-primary); }
 
     .usda-header {
         background: linear-gradient(135deg, #1a3a2a 0%, #2e6b3e 60%, #4a9e5c 100%);
@@ -39,21 +64,21 @@ st.markdown("""
     .usda-header p  { font-size: 0.92rem; opacity: 0.85; margin: 0.3rem 0 0; }
 
     .kpi-card {
-        background: white; border-radius: 10px;
+        background: var(--bg-card); border-radius: 10px;
         padding: 1rem 1.2rem;
         box-shadow: 0 2px 8px rgba(0,0,0,0.07);
         border-left: 5px solid #2e6b3e; margin-bottom: 0.6rem;
     }
-    .kpi-card .kpi-val { font-size: 1.8rem; font-weight: 700; color: #1a3a2a; line-height: 1.1; }
-    .kpi-card .kpi-lbl { font-size: 0.74rem; color: #6c757d; text-transform: uppercase;
+    .kpi-card .kpi-val { font-size: 1.8rem; font-weight: 700; color: var(--text-primary); line-height: 1.1; }
+    .kpi-card .kpi-lbl { font-size: 0.74rem; color: var(--text-secondary); text-transform: uppercase;
                           letter-spacing: .06em; margin-top: 0.2rem; }
 
     .geo-callout {
-        background: #e8f5e9; border: 1px solid #81c784;
+        background: var(--bg-callout); border: 1px solid #81c784;
         border-radius: 8px; padding: 0.75rem 1.1rem;
-        margin: 0.7rem 0; font-size: 0.88rem; color: #1b5e20;
+        margin: 0.7rem 0; font-size: 0.88rem; color: var(--text-accent);
     }
-    .geo-callout strong { color: #2e7d32; }
+    .geo-callout strong { color: #81c784; }
 
     .persona-badge {
         display: inline-block; padding: 0.28rem 0.85rem;
@@ -65,23 +90,37 @@ st.markdown("""
     .p2 { background:#f3e5f5; color:#4a148c; }
     .p3 { background:#e8f5e9; color:#1b5e20; }
 
+    @media (prefers-color-scheme: dark) {
+        .p0 { background:rgba(230, 81, 0, 0.15); color:#ff9100; }
+        .p1 { background:rgba(13, 71, 161, 0.15); color:#42a5f5; }
+        .p2 { background:rgba(74, 20, 140, 0.15); color:#ba68c8; }
+        .p3 { background:rgba(27, 94, 32, 0.15); color:#81c784; }
+    }
+
     .zombie-box {
         background: #ffebee; border: 2px dashed #e53935;
         border-radius: 8px; padding: 0.65rem 1rem;
         font-size: 0.85rem; color: #b71c1c; margin-bottom: 0.8rem;
     }
 
+    @media (prefers-color-scheme: dark) {
+        .zombie-box {
+            background: rgba(229, 57, 53, 0.1); border: 2px dashed #ff6b6b;
+            color: #ff8a80;
+        }
+    }
+
     .insight-card {
-        background: white; border-radius: 10px;
+        background: var(--bg-card); border-radius: 10px;
         padding: 1rem 1.2rem; margin-bottom: 0.7rem;
         box-shadow: 0 2px 6px rgba(0,0,0,0.06);
         border-top: 4px solid #2e6b3e;
     }
-    .insight-card h4 { margin: 0 0 0.4rem; color: #1a3a2a; font-size: 0.95rem; }
-    .insight-card p  { margin: 0; font-size: 0.86rem; color: #444; line-height: 1.5; }
+    .insight-card h4 { margin: 0 0 0.4rem; color: var(--text-primary); font-size: 0.95rem; }
+    .insight-card p  { margin: 0; font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5; }
 
     .section-title {
-        font-size: 1.1rem; font-weight: 700; color: #1a3a2a;
+        font-size: 1.1rem; font-weight: 700; color: var(--text-primary);
         border-bottom: 2px solid #2e6b3e;
         padding-bottom: 0.28rem; margin-bottom: 0.9rem;
     }
@@ -90,7 +129,14 @@ st.markdown("""
         background: #f1f8e9; border: 1.5px solid #66bb6a;
         border-radius: 10px; padding: 1rem 1.2rem; margin-top: 0.8rem;
     }
-    .sim-result-box h4 { margin: 0 0 0.5rem; color: #1b5e20; }
+
+    @media (prefers-color-scheme: dark) {
+        .sim-result-box {
+            background: rgba(102, 187, 106, 0.1); border: 1.5px solid #81c784;
+        }
+    }
+
+    .sim-result-box h4 { margin: 0 0 0.5rem; color: var(--text-accent); }
 
     div[data-testid="stTab"] button { font-weight: 600; }
 </style>
