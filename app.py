@@ -122,14 +122,14 @@ st.markdown("""
     .insight-card p  { margin: 0; font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5; }
 
     .section-title {
-        font-size: 1.1rem; font-weight: 700; color: #1a3a2a !important;
+        font-size: 1.1rem; font-weight: 700; color: #000000 !important;
         border-bottom: 2px solid #2e6b3e;
         padding-bottom: 0.28rem; margin-bottom: 0.9rem;
     }
 
     @media (prefers-color-scheme: dark) {
         .section-title {
-            color: #ffffff !important;
+            color: #e8e8e8 !important;
         }
     }
 
