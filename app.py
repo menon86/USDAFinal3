@@ -322,6 +322,7 @@ tabs = st.tabs([
     "🧪 Model Diagnostics",
     "🎛️ Page Simulator",
     "🏆 Strategic Insights",
+    "🤖 AI Agent",
     "📖 Manual",
 ])
 
@@ -694,23 +695,6 @@ with tabs[1]:
                 mime="text/csv",
                 use_container_width=True,
             )
-
-    st.markdown("---")
-    st.markdown('<div class="section-title">🤖 AI Strategic Agent</div>',
-                unsafe_allow_html=True)
-    st.markdown("""
-    For deeper strategic analysis and personalized recommendations, use our **AI Strategic Agent**:
-    
-    **[MGMT 389 Final Project GPT](https://chatgpt.com/g/g-69eea18b5440819181be9284110a61a2-mgmt-389-final-project-gpt)**
-    
-    The AI agent can help with:
-    - Strategic recommendations for each persona cluster
-    - Competitive analysis and benchmarking
-    - Implementation roadmaps for prioritised pages
-    - ROI projections for proposed changes
-    - Custom analysis and what-if scenarios
-    """)
-
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -1125,9 +1109,92 @@ with tabs[4]:
 
 
 # ══════════════════════════════════════════════════════════════════════
-# TAB 6 — MANUAL
+# TAB 5 — AI AGENT
 # ══════════════════════════════════════════════════════════════════════
 with tabs[5]:
+    st.markdown('<div class="section-title">🤖 AI Strategic Agent</div>',
+                unsafe_allow_html=True)
+    
+    st.markdown("""
+    ### Unlock Deeper Strategic Insights
+    
+    For advanced analysis beyond the dashboard, use our **AI Strategic Agent** — an intelligent 
+    companion trained on USDA RD strategy, digital transformation best practices, and this 
+    complete analytics framework.
+    """)
+    
+    st.info("""
+    **[🔗 Open MGMT 389 Final Project GPT](https://chatgpt.com/g/g-69eea18b5440819181be9284110a61a2-mgmt-389-final-project-gpt)**
+    
+    Click the link above to access the AI agent in a new window.
+    """)
+    
+    st.markdown("---")
+    st.markdown("### What the AI Agent Can Help With")
+    
+    st.markdown("""
+    **Strategic Planning**
+    - Tailored recommendations for each persona cluster
+    - Prioritization frameworks for page improvements
+    - Roadmap development for digital transformation
+    
+    **Competitive Analysis**
+    - Benchmarking against industry standards
+    - Peer comparison for RD program effectiveness
+    - Best practices from similar government digital initiatives
+    
+    **Implementation Support**
+    - Detailed implementation plans for recommendations
+    - Resource allocation and budgeting guidance
+    - Risk mitigation strategies
+    
+    **ROI & Impact Analysis**
+    - Projected impact of proposed changes
+    - Cost-benefit analysis for investments
+    - KPI tracking and success metrics
+    
+    **Custom Analysis**
+    - What-if scenarios for business decisions
+    - Deep dives into specific clusters or pages
+    - Comparative analysis across time periods
+    """)
+    
+    st.markdown("---")
+    st.markdown("### How to Use")
+    
+    st.markdown("""
+    1. **Click the link** to open the AI agent in ChatGPT
+    2. **Upload this dashboard's data** — export CSVs from the "Download Full Cluster Reports" section
+    3. **Ask strategic questions** — the agent will provide data-backed recommendations
+    4. **Iterate and refine** — use insights to inform executive decisions
+    
+    **Example questions to ask the agent:**
+    - "What's the best strategy for the Friction-Stalled pages?"
+    - "How should we allocate budget across clusters?"
+    - "What would be the impact of 20% improvement in bounce rate?"
+    - "Compare our performance to similar RD programs"
+    """)
+    
+    st.markdown("---")
+    st.markdown("### About the Agent")
+    
+    st.markdown("""
+    This AI Strategic Agent is specifically trained on:
+    - K-Means clustering methodology and interpretation
+    - USDA Rural Development program knowledge
+    - Digital analytics best practices
+    - Executive decision-making frameworks
+    - Implementation strategies for government agencies
+    
+    The agent understands your dashboard's data structure and can provide contextual, 
+    actionable recommendations grounded in the personas and metrics you see here.
+    """)
+
+
+# ══════════════════════════════════════════════════════════════════════
+# TAB 6 — MANUAL
+# ══════════════════════════════════════════════════════════════════════
+with tabs[6]:
     st.markdown('<div class="section-title">📖 User Manual — USDA RD Analytics Dashboard</div>',
                 unsafe_allow_html=True)
     st.markdown("""
