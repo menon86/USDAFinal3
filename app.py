@@ -647,6 +647,60 @@ with tabs[1]:
                 use_container_width=True, hide_index=True,
             )
 
+    # Download full cluster lists
+    st.markdown("---")
+    st.markdown('<div class="section-title">📥 Download Full Cluster Reports</div>',
+                unsafe_allow_html=True)
+    st.caption("Export all pages in each cluster to CSV for detailed analysis and strategic planning.")
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    for c in range(OPTIMAL_K):
+        sub = rd_agg[rd_agg["Cluster"]==c].sort_values("Total Sessions", ascending=False)
+        name = PERSONA_NAMES[c][0].split()[0]  # First word for filename
+        persona_full = PERSONA_NAMES[c][0]
+        
+        # Prepare CSV data
+        export_df = sub[[
+            "Page path and screen class",
+            "Total Sessions",
+            "Total Users",
+            "Total Bounce rate",
+            "Total Average session duration",
+            "Total Views per session",
+            "Total Event count"
+        ]].copy()
+        
+        export_df = export_df.rename(columns={
+            "Page path and screen class": "Page Path",
+            "Total Sessions": "Sessions",
+            "Total Users": "Users",
+            "Total Bounce rate": "Bounce Rate",
+            "Total Average session duration": "Avg Duration (s)",
+            "Total Views per session": "Views/Session",
+            "Total Event count": "Event Count"
+        })
+        
+        # Format numbers
+        export_df["Sessions"] = export_df["Sessions"].apply(lambda x: f"{int(x):,}")
+        export_df["Users"] = export_df["Users"].apply(lambda x: f"{int(x):,}")
+        export_df["Bounce Rate"] = export_df["Bounce Rate"].apply(lambda x: f"{x:.1%}")
+        export_df["Avg Duration (s)"] = export_df["Avg Duration (s)"].apply(lambda x: f"{x:.0f}")
+        export_df["Views/Session"] = export_df["Views/Session"].apply(lambda x: f"{x:.2f}")
+        export_df["Event Count"] = export_df["Event Count"].apply(lambda x: f"{int(x):,}")
+        
+        csv = export_df.to_csv(index=False)
+        
+        cols = [col1, col2, col3, col4]
+        with cols[c]:
+            st.download_button(
+                label=f"📊 {name}\n({len(sub)} pages)",
+                data=csv,
+                file_name=f"USDA_RD_Cluster_{c}_{name}_Pages.csv",
+                mime="text/csv",
+                use_container_width=True,
+            )
+
 
 # ══════════════════════════════════════════════════════════════════════
 # TAB 3 — MODEL DIAGNOSTICS
