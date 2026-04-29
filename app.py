@@ -658,36 +658,29 @@ with tabs[1]:
     for c in range(OPTIMAL_K):
         sub = rd_agg[rd_agg["Cluster"]==c].sort_values("Total Sessions", ascending=False)
         name = PERSONA_NAMES[c][0].split()[0]  # First word for filename
-        persona_full = PERSONA_NAMES[c][0]
         
-        # Prepare CSV data
+        # Prepare CSV data with available columns from rd_agg
         export_df = sub[[
             "Page path and screen class",
             "Total Sessions",
-            "Total Users",
             "Total Bounce rate",
             "Total Average session duration",
-            "Total Views per session",
-            "Total Event count"
+            "Total Views per session"
         ]].copy()
         
         export_df = export_df.rename(columns={
             "Page path and screen class": "Page Path",
             "Total Sessions": "Sessions",
-            "Total Users": "Users",
-            "Total Bounce rate": "Bounce Rate",
+            "Total Bounce rate": "Bounce Rate (%)",
             "Total Average session duration": "Avg Duration (s)",
-            "Total Views per session": "Views/Session",
-            "Total Event count": "Event Count"
+            "Total Views per session": "Views/Session"
         })
         
-        # Format numbers
+        # Format numbers for readability
         export_df["Sessions"] = export_df["Sessions"].apply(lambda x: f"{int(x):,}")
-        export_df["Users"] = export_df["Users"].apply(lambda x: f"{int(x):,}")
-        export_df["Bounce Rate"] = export_df["Bounce Rate"].apply(lambda x: f"{x:.1%}")
+        export_df["Bounce Rate (%)"] = export_df["Bounce Rate (%)"].apply(lambda x: f"{x*100:.1f}")
         export_df["Avg Duration (s)"] = export_df["Avg Duration (s)"].apply(lambda x: f"{x:.0f}")
         export_df["Views/Session"] = export_df["Views/Session"].apply(lambda x: f"{x:.2f}")
-        export_df["Event Count"] = export_df["Event Count"].apply(lambda x: f"{int(x):,}")
         
         csv = export_df.to_csv(index=False)
         
