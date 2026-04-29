@@ -37,6 +37,7 @@ st.markdown("""
         --text-secondary: #6c757d;
         --text-accent: #1b5e20;
         --text-error: #b71c1c;
+        --text-caption: #505050;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -49,6 +50,7 @@ st.markdown("""
             --text-secondary: #b0b0b0;
             --text-accent: #81c784;
             --text-error: #ff8a80;
+            --text-caption: #c0c0c0;
         }
     }
 
@@ -138,6 +140,9 @@ st.markdown("""
 
     .sim-result-box h4 { margin: 0 0 0.5rem; color: var(--text-accent); }
 
+    /* Caption styling - darker text for readability on light backgrounds */
+    [data-testid="stMarkdownContainer"] p:has(+ p) { color: var(--text-caption); }
+    
     div[data-testid="stTab"] button { font-weight: 600; }
 </style>
 """, unsafe_allow_html=True)
