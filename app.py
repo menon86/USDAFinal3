@@ -658,6 +658,7 @@ with tabs[1]:
     for c in range(OPTIMAL_K):
         sub = rd_agg[rd_agg["Cluster"]==c].sort_values("Total Sessions", ascending=False)
         name = PERSONA_NAMES[c][0].split()[0]  # First word for filename
+        persona_full = PERSONA_NAMES[c][0]
         
         # Prepare CSV data with available columns from rd_agg
         export_df = sub[[
@@ -687,12 +688,29 @@ with tabs[1]:
         cols = [col1, col2, col3, col4]
         with cols[c]:
             st.download_button(
-                label=f"📊 {name}\n({len(sub)} pages)",
+                label=f"📥 {persona_full}\n{len(sub)} pages • {sub['Total Sessions'].sum():,.0f} sessions",
                 data=csv,
                 file_name=f"USDA_RD_Cluster_{c}_{name}_Pages.csv",
                 mime="text/csv",
                 use_container_width=True,
             )
+
+    st.markdown("---")
+    st.markdown('<div class="section-title">🤖 AI Strategic Agent</div>',
+                unsafe_allow_html=True)
+    st.markdown("""
+    For deeper strategic analysis and personalized recommendations, use our **AI Strategic Agent**:
+    
+    **[MGMT 389 Final Project GPT](https://chatgpt.com/g/g-69eea18b5440819181be9284110a61a2-mgmt-389-final-project-gpt)**
+    
+    The AI agent can help with:
+    - Strategic recommendations for each persona cluster
+    - Competitive analysis and benchmarking
+    - Implementation roadmaps for prioritised pages
+    - ROI projections for proposed changes
+    - Custom analysis and what-if scenarios
+    """)
+
 
 
 # ══════════════════════════════════════════════════════════════════════
